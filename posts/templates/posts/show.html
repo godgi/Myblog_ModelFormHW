@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<br><br><br><br>
+<h2 style = "color: powderblue; font-weight: bold; text-align: center;">상세보기 페이지</h2>
+<br><br><br><br>
+    {% if post.image %}
+        <br>
+        <img src ="{{ post.image.url }}" style="height: 50%; width:50%; margin-left:auto; margin-right:auto; display: block;">
+    {%  endif %}
+<h5 style = "font-weight: bold;">상품명 : {{ post.item }} </h5><br>
+{% if post.user %}
+    <h5 style = "font-weight: bold;">판매자 : {{ post.user }} </h5><br>
+{% else %}
+    <h5 style = "font-weight: bold;">이름: 알 수 없음 </h5><br>
+{% endif %}
+<h5 style = "font-weight: bold;">상품 설명 : {{ post.explanation }} </h5><br>
+<h5 style = "font-weight: bold;">상품 가격 : {{ post.price }}원 </h5><br>
+<h5 style = "font-weight: bold;">남은 재고 : {{ post.stock }}개 </h5><br>
+<h5 style = "font-weight: bold;">작성 시각 : {{ post.created_at }} </h5><br>
+<h5 style = "font-weight: bold;">수정 시각 : {{ post.updated_at }} </h5><br>
+<div class = "kmg123123" style = "text-align: center;"> 
+    {% if user == post.user %}
+        <a href = "{% url 'posts:update' post.pk %}" class="btn btn-primary">수정하기</a>
+        <a href = "{% url 'posts:delete' post.pk %}" class="btn btn-danger">삭제하기</a>
+    {% else %}  
+    {% endif %}
+</div>
+{% endblock %}
