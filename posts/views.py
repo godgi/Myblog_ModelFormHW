@@ -1,22 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from .forms import PostForm
 from .models import Product
 from .models import Review
 
 # Create your views here.
 
 def new(request):
-    return render(request, 'posts/new.html')
+    form = PostForm()
+    return render(request, 'posts/new.html', {'form':form})
     
 
 def create(request):
     if request.method == "POST":
-        item = request.POST.get('item')
-        explanation = request.POST.get('explanation')
-        price = request.POST.get('price')
-        stock = request.POST.get('stock')
-        image = request.FILES.get('image')
-        user = request.user
-        Product.objects.create(item=item, explanation=explanation, price=price, stock=stock, image=image, user=user)
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(user = request.user)
         return redirect('posts:main')
 
 
